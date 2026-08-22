@@ -3,6 +3,5 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://nick98anderson.github.io',
-	base: '/portfolio-webapp',
+	site: 'https://nickanderson.cloud',
 });

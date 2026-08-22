@@ -1,13 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Crumbs from '../components/Crumbs.astro';
-const base = import.meta.env.BASE_URL;
 ---
 
 <Layout>
 	<Crumbs active="about" />
 	<main class="about">
-			<img class="avatar" src={`${base}/me.jpeg`} alt="Nick Anderson" />
+			<img class="avatar" src="/me.jpeg" alt="Nick Anderson" />
 			<div class="bio">
 				<p>
 					I'm a Data Engineer with end-to-end experience across cloud
