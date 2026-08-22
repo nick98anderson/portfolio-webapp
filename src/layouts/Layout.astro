@@ -1,0 +1,40 @@
+---
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/800.css';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Nick Anderson</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		min-height: 100%;
+	}
+	body {
+		font-family: 'Inter', system-ui, -apple-system, sans-serif;
+		background: linear-gradient(
+			to right,
+			#0B110D 0%,
+			#152019 5%,
+			#1F2A24 16%,
+			#1F2A24 100%
+		);
+		color: #E8E2D0;
+	}
+</style>

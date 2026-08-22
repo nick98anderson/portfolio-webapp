@@ -1,0 +1,184 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+---
+
+<Layout>
+	<Crumbs active="resume" />
+	<main class="resume">
+		<header class="resume-header reveal" style="--i: 0">
+			<h1 class="name">Nicholas Anderson</h1>
+			<p class="contact">
+				Calgary, Alberta, Canada&nbsp;&nbsp;•&nbsp;&nbsp;+1 (587) 982-0953&nbsp;&nbsp;•&nbsp;&nbsp;
+				<a href="mailto:nick98anderson@gmail.com">nick98anderson@gmail.com</a>
+			</p>
+		</header>
+
+		<section class="reveal" style="--i: 1">
+			<h2 class="section-title">Skills</h2>
+			<dl class="skills">
+				<dt>Languages</dt>
+				<dd>Python, SQL, JavaScript, Java, C++, Groovy</dd>
+				<dt>Tools &amp; Technologies</dt>
+				<dd>Pulumi, Terraform, GitHub Actions, Kubernetes, Docker, Google Cloud Platform, React, Django, PostgreSQL, REST, SAP, Oracle EPM</dd>
+			</dl>
+		</section>
+
+		<section class="reveal" style="--i: 2">
+			<h2 class="section-title">Relevant Experience</h2>
+
+			<article class="role">
+				<div class="role-head">
+					<h3>TELUS <span class="sep">·</span> <span class="role-title">Data Engineer</span></h3>
+				</div>
+				<div class="project">
+					<div class="project-head">
+						<h4>Financial Planning Platform Modernization</h4>
+						<span class="meta">Technical Lead <span class="sep">·</span> 2025 – Present</span>
+					</div>
+					<ul>
+						<li>Rebuilt the financial planning and management tool serving 100+ financial analysts and controllers, replacing a manual, spreadsheet-driven SAP process — owned architecture, delivery, and operations end to end.</li>
+						<li>Designed a pipeline ingesting master data from 4 ERPs into a queryable REST API, establishing a single unified master-data repository for the organization.</li>
+						<li>Delivered a self-serve portal for hierarchy change requests with role-based approvals and corporate SSO, converting multi-step manual workflows into single-click approvals and moving a governed process off email into an auditable system.</li>
+						<li>Stood up production infrastructure from scratch on GKE with automated canary deployments, rollback, and secret management.</li>
+					</ul>
+				</div>
+
+				<div class="project">
+					<div class="project-head">
+						<h4>GCP Financial Data Mart Modernization</h4>
+						<span class="meta">Technical Lead <span class="sep">·</span> 2024 – 2026</span>
+					</div>
+					<ul>
+						<li>Migrated financial reporting off a legacy MS SQL Server / Informatica / SAS stack to a GCP stack tracking $5B+ in annual revenue across 8 billing platforms, cutting ~$5K/month in third-party licensing costs.</li>
+						<li>Executed a phased cut-over with parallel runs and reconciliation against the legacy system, with no disruption to business-critical month-end close.</li>
+						<li>Engineered ingestion and transformation pipelines using Cloud Batch, Cloud Run, Pub/Sub, and BigQuery; automated ERP extraction into the corporate budgeting tool, eliminating 12+ hours of manual data transfers per month.</li>
+						<li>Provisioned all infrastructure as code with Pulumi; designed partitioned and clustered BigQuery tables to meet interactive-latency targets for finance users.</li>
+					</ul>
+				</div>
+			</article>
+		</section>
+
+		<section class="reveal" style="--i: 3">
+			<h2 class="section-title">Education</h2>
+			<div class="edu">
+				<h3>University of Alberta <span class="sep">·</span> <span class="edu-title">BSc, Computing Science</span></h3>
+				<span class="meta">2019 – December 2023</span>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.resume {
+		max-width: 780px;
+		margin: 0 auto;
+		padding: 5rem 1.75rem 6rem;
+		line-height: 1.55;
+	}
+
+	.reveal {
+		opacity: 0;
+		transform: translateY(14px);
+		animation: reveal 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		animation-delay: calc(120ms + var(--i) * 140ms);
+	}
+	@keyframes reveal {
+		to { opacity: 1; transform: translateY(0); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reveal { opacity: 1 !important; transform: none !important; animation: none !important; }
+	}
+
+	.resume-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+	.name {
+		font-size: clamp(2rem, 4.5vw, 3rem);
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		margin: 0 0 0.5rem;
+	}
+	.contact {
+		margin: 0;
+		font-size: 0.95rem;
+		opacity: 0.75;
+	}
+	.contact a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+
+	.section-title {
+		font-size: 1.05rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		margin: 0 0 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid rgba(232, 226, 208, 0.2);
+	}
+
+	section {
+		margin-bottom: 2.75rem;
+	}
+
+	.skills {
+		display: grid;
+		grid-template-columns: max-content 1fr;
+		gap: 0.5rem 1.25rem;
+		margin: 0;
+	}
+	.skills dt {
+		font-weight: 600;
+		opacity: 0.85;
+	}
+	.skills dd {
+		margin: 0;
+		opacity: 0.9;
+	}
+
+	.role h3, .edu h3 {
+		font-size: 1.1rem;
+		font-weight: 600;
+		margin: 0;
+	}
+	.role-title, .edu-title { font-weight: 400; opacity: 0.85; }
+
+	.project { margin-top: 1.5rem; }
+	.project-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+	}
+	.project-head h4 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0;
+	}
+	.meta {
+		font-size: 0.9rem;
+		opacity: 0.7;
+		white-space: nowrap;
+	}
+	.sep { opacity: 0.5; margin: 0 0.15rem; }
+
+	.project ul {
+		margin: 0;
+		padding-left: 1.15rem;
+	}
+	.project li {
+		margin-bottom: 0.5rem;
+		opacity: 0.9;
+	}
+	.project li::marker { color: rgba(232, 226, 208, 0.5); }
+
+	.edu {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+</style>

@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Crumbs from '../components/Crumbs.astro';
+---
+
+<Layout>
+	<Crumbs active="about" />
+	<main class="about">
+			<img class="avatar" src="/me.jpeg" alt="Nick Anderson" />
+			<div class="bio">
+				<p>
+					I'm a Data Engineer with end-to-end experience across cloud
+					infrastructure, backend development, data engineering, and system
+					architecture. Much of my career has been focused on modernizing
+					enterprise financial systems, migrating legacy stacks to Google
+					Cloud, automating master-data workflows, and building scalable
+					platforms that handle billions in revenue. I'm passionate about
+					applying technology in practical, measurable ways that drive real
+					business value and streamline complex operations.
+				</p>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	.page {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+	}
+	.about {
+		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem 1.5rem;
+		max-width: 640px;
+		margin: 0 auto;
+		text-align: left;
+	}
+	.avatar {
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+		object-fit: cover;
+		padding: 6px;
+		background: #E8E2D0;
+		margin-bottom: 3rem;
+	}
+	.bio {
+		font-size: 1rem;
+		line-height: 1.6;
+	}
+	.bio p {
+		margin: 0 0 1.25rem;
+	}
+	.bio p:last-child {
+		margin-bottom: 0;
+	}
+	.bio a {
+		color: inherit;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+</style>
