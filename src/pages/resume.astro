@@ -30,30 +30,38 @@ import Crumbs from '../components/Crumbs.astro';
 			<article class="role">
 				<div class="role-head">
 					<h3>TELUS <span class="sep">·</span> <span class="role-title">Data Engineer</span></h3>
+					<span class="meta">May 2022 – Present</span>
 				</div>
+				<ul class="role-summary">
+					<li>Technical lead across two major platform initiatives; scope covers $5B+/yr in revenue reporting, $100M+/yr in financial planning transactions, 10+ source systems, 300+ users across 7 business units.</li>
+					<li>Led full decommission of legacy on-prem stack (MSSQL/Informatica/SAS) and migration to GCP with zero disruption to month-end financial close; cut ~$100K/yr in licensing.</li>
+					<li>Partnered with stakeholders across 7 business units to translate financial planning requirements into pipeline designs, data models, and platform features.</li>
+					<li>Defined team engineering standards end to end: IaC, CI/CD, branching strategy, release process, design docs; onboarded 3 new developers against those standards.</li>
+				</ul>
+
+				<h4 class="subsection">Selected Projects</h4>
+
 				<div class="project">
 					<div class="project-head">
-						<h4>Financial Planning Platform Modernization</h4>
+						<h4>Financial Planning Platform</h4>
 						<span class="meta">Technical Lead <span class="sep">·</span> 2025 – Present</span>
 					</div>
 					<ul>
-						<li>Rebuilt the financial planning and management tool serving 100+ financial analysts and controllers, replacing a manual, spreadsheet-driven SAP process — owned architecture, delivery, and operations end to end.</li>
-						<li>Designed a pipeline ingesting master data from 4 ERPs into a queryable REST API, establishing a single unified master-data repository for the organization.</li>
-						<li>Delivered a self-serve portal for hierarchy change requests with role-based approvals and corporate SSO, converting multi-step manual workflows into single-click approvals and moving a governed process off email into an auditable system.</li>
-						<li>Stood up production infrastructure from scratch on GKE with automated canary deployments, rollback, and secret management.</li>
+						<li>Designed async job pipeline (Celery/Redis) for ERP write-backs with idempotent retry, per-request status tracking, and rollback; kept UI responsive under concurrent approval traffic from 300+ users.</li>
+						<li>Built admin interface for live data editing, request queuing, and operational control over import/export operations; LDAP-integrated role-based access controlling approval chains and data visibility.</li>
+						<li>Automated end-to-end posting of $100M+/yr in financial planning transactions across 7 business units; cut ~10hr manual cycles to &lt;20min.</li>
 					</ul>
 				</div>
 
 				<div class="project">
 					<div class="project-head">
-						<h4>GCP Financial Data Mart Modernization</h4>
+						<h4>GCP Financial Data Mart Migration</h4>
 						<span class="meta">Technical Lead <span class="sep">·</span> 2024 – 2026</span>
 					</div>
 					<ul>
-						<li>Migrated financial reporting off a legacy MS SQL Server / Informatica / SAS stack to a GCP stack tracking $5B+ in annual revenue across 8 billing platforms, cutting ~$5K/month in third-party licensing costs.</li>
-						<li>Executed a phased cut-over with parallel runs and reconciliation against the legacy system, with no disruption to business-critical month-end close.</li>
-						<li>Engineered ingestion and transformation pipelines using Cloud Batch, Cloud Run, Pub/Sub, and BigQuery; automated ERP extraction into the corporate budgeting tool, eliminating 12+ hours of manual data transfers per month.</li>
-						<li>Provisioned all infrastructure as code with Pulumi; designed partitioned and clustered BigQuery tables to meet interactive-latency targets for finance users.</li>
+						<li>Engineered source-of-truth revenue reporting pipeline tracking $5B+/yr at customer-level granularity; 15+ ELT pipelines consolidating 10+ source systems into BigQuery; 30+ downstream BI reports.</li>
+						<li>Built event-driven sync pipelines (Cloud Run, Pub/Sub, Cloud Scheduler) automating data flows between enterprise financial systems; eliminated 12+ hrs/month of manual transfers.</li>
+						<li>Provisioned all infrastructure as code via Pulumi; designed partitioned/clustered BigQuery tables for interactive-latency query performance; containerized batch pipelines on Cloud Run/Cloud Batch.</li>
 					</ul>
 				</div>
 			</article>
@@ -142,6 +150,31 @@ import Crumbs from '../components/Crumbs.astro';
 		margin: 0;
 	}
 	.role-title, .edu-title { font-weight: 400; opacity: 0.85; }
+	.role-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 1rem;
+		flex-wrap: wrap;
+		margin-bottom: 0.75rem;
+	}
+	.role-summary {
+		margin: 0 0 1.75rem;
+		padding-left: 1.15rem;
+	}
+	.role-summary li {
+		margin-bottom: 0.5rem;
+		opacity: 0.9;
+	}
+	.role-summary li::marker { color: rgba(232, 226, 208, 0.5); }
+	.subsection {
+		font-size: 0.85rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.14em;
+		opacity: 0.7;
+		margin: 0 0 0.5rem;
+	}
 
 	.project { margin-top: 1.5rem; }
 	.project-head {
