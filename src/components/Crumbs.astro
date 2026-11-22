@@ -1,14 +1,10 @@
 ---
-const { active } = Astro.props as { active: 'about' | 'resume' };
+const { active } = Astro.props as { active: 'resume' };
 ---
 
 <nav class="crumbs" aria-label="Breadcrumb">
 	<a href="/" aria-label="Home">
 		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
-	</a>
-	<span class="sep">/</span>
-	<a href="/about" class:list={{ active: active === 'about' }} aria-label="About" aria-current={active === 'about' ? 'page' : undefined}>
-		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
 	</a>
 	<span class="sep">/</span>
 	<a href="/resume" class:list={{ active: active === 'resume' }} aria-label="Resume" aria-current={active === 'resume' ? 'page' : undefined}>
@@ -29,17 +25,27 @@ const { active } = Astro.props as { active: 'about' | 'resume' };
 	.crumbs a {
 		color: inherit;
 		opacity: 0.55;
-		transition: opacity 180ms ease;
+		transition: opacity 180ms ease, color 180ms ease;
 		display: inline-flex;
 	}
-	.crumbs a:hover { opacity: 1; }
-	.crumbs a.active { opacity: 1; }
+	.crumbs a:hover {
+		opacity: 1;
+		color: var(--accent-2);
+	}
+	.crumbs a.active {
+		opacity: 1;
+		color: var(--accent);
+	}
 	.crumbs svg {
 		width: 1rem;
 		height: 1rem;
 	}
+	@media print {
+		.crumbs { display: none; }
+	}
 	.sep {
-		opacity: 0.3;
+		color: var(--cream-dim);
+		opacity: 0.35;
 		font-size: 0.85rem;
 	}
 </style>

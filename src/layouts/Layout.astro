@@ -1,23 +1,59 @@
 ---
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/800.css';
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import Grain from '../components/Grain.astro';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 		<meta name="generator" content={Astro.generator} />
+		<meta name="theme-color" content="#141830" />
 		<title>Nick Anderson</title>
 	</head>
 	<body>
+		<Grain />
 		<slot />
 	</body>
 </html>
 
-<style>
+<style is:global>
+	/* Palette: deep navy ink and cream type over the underwater footage,
+	   with a warm sand accent to play against the cool teal water. */
+	:root {
+		--ink: #141830;
+		--ink-2: #1C2142;
+		--indigo: #3D4890;
+		--periwinkle: #5A64AE;
+		--accent: #E8B66C;   /* sand */
+		--accent-2: #F2CE94; /* light sand: hovers, bullets */
+		--cream: #F6DDCC;
+		--cream-dim: rgba(246, 221, 204, 0.72);
+		--line: rgba(232, 182, 108, 0.32);
+
+		--font-display: 'Space Grotesk', system-ui, sans-serif;
+		--font-body: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+
+		color-scheme: dark;
+	}
+
+	/* Native cross-document view transitions: page changes crossfade, and the
+	   shared "backdrop" layer morphs from live video into the blurred still. */
+	@view-transition {
+		navigation: auto;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		@view-transition { navigation: none; }
+	}
+
+	/* Background lives on <html> so the z-index:-1 backdrop layer paints above it. */
+	html {
+		background: var(--ink);
+	}
 	html,
 	body {
 		margin: 0;
@@ -25,14 +61,29 @@ import '@fontsource/inter/800.css';
 		min-height: 100%;
 	}
 	body {
-		font-family: 'Inter', system-ui, -apple-system, sans-serif;
-		background: linear-gradient(
-			to right,
-			#0B110D 0%,
-			#152019 5%,
-			#1F2A24 16%,
-			#1F2A24 100%
-		);
-		color: #E8E2D0;
+		font-family: var(--font-body);
+		color: var(--cream);
+		-webkit-font-smoothing: antialiased;
+	}
+
+	::selection {
+		background: var(--accent);
+		color: var(--ink);
+	}
+
+	/* Worn-print effect for big type and solid shapes: punches small
+	   irregular holes through the ink, like the poster's distressed title. */
+	.distress {
+		-webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='d'><feTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12 9.2'/></filter><rect width='100%' height='100%' filter='url(%23d)'/></svg>"),
+			url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -16 12.2'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+		-webkit-mask-composite: source-in;
+		mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='d'><feTurbulence type='fractalNoise' baseFrequency='0.11' numOctaves='3' seed='5' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -12 9.2'/></filter><rect width='100%' height='100%' filter='url(%23d)'/></svg>"),
+			url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -16 12.2'/></filter><rect width='100%' height='100%' filter='url(%23g)'/></svg>");
+		mask-composite: intersect;
+	}
+
+	a:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 4px;
 	}
 </style>
