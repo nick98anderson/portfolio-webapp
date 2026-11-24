@@ -1,9 +1,5 @@
 <section class="hero">
-	<h1 class="hero-name" aria-label="Nick Anderson">
-		<span class="mask"><span class="inner" style="transform: translateY(110%)">Nick</span></span>
-		<span class="mask-gap">&nbsp;</span>
-		<span class="mask"><span class="inner" style="transform: translateY(110%)">Anderson</span></span>
-	</h1>
+	<h1 class="hero-name">Nick Anderson</h1>
 	<div class="hero-below">
 	<span class="hero-rule distress" aria-hidden="true" style="width: 0"></span>
 	<nav class="hero-links" aria-label="Primary" style="opacity: 0">
@@ -25,17 +21,14 @@
 
 <script>
 	function armIntro() {
-		const inners = document.querySelectorAll<HTMLElement>('.hero-name .inner');
+		const name = document.querySelector<HTMLElement>('.hero-name');
 		const rule = document.querySelector<HTMLElement>('.hero-rule');
 		const links = document.querySelector<HTMLElement>('.hero-links');
-		inners.forEach((el) => {
-			el.style.animation = 'none';
-			el.style.transform = 'translateY(110%)';
-		});
+		if (name) name.style.animation = 'none';
 		if (rule)  { rule.style.animation  = 'none'; rule.style.width = '0'; }
 		if (links) { links.style.animation = 'none'; links.style.opacity = '0'; }
 		void document.body.offsetHeight;
-		inners.forEach((el) => { el.style.animation = ''; });
+		if (name) name.style.animation = '';
 		if (rule)  rule.style.animation  = '';
 		if (links) links.style.animation = '';
 	}
@@ -71,31 +64,10 @@
 		letter-spacing: -0.03em;
 		line-height: 1;
 		color: var(--cream);
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 0;
 		padding: 0 1rem;
+		/* Focus pull: starts blurred and faint, sharpens into focus. */
+		animation: focus-pull 1700ms cubic-bezier(0.2, 0.7, 0.2, 1) 150ms both;
 	}
-	.hero-name .mask {
-		display: inline-block;
-		overflow: hidden;
-		padding: 0.08em 0.04em 0.04em;
-		margin: -0.08em -0.04em -0.04em;
-		line-height: 1;
-	}
-	.hero-name .mask-gap {
-		display: inline-block;
-		width: 0.28em;
-	}
-	.hero-name .inner {
-		display: inline-block;
-		transform: translateY(110%);
-		will-change: transform;
-		animation: mask-rise 1200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	}
-	.hero-name .mask:nth-child(1) .inner { animation-delay: 200ms; }
-	.hero-name .mask:nth-child(3) .inner { animation-delay: 340ms; }
 
 	.hero-rule {
 		display: block;
@@ -104,17 +76,18 @@
 		background: var(--accent);
 		opacity: 1;
 		margin: 1.25rem 0 0.6rem;
-		animation: rule-draw 900ms cubic-bezier(0.7, 0, 0.2, 1) 1100ms forwards;
+		animation: rule-draw 800ms cubic-bezier(0.7, 0, 0.2, 1) 1300ms forwards;
 	}
 
-	@keyframes mask-rise {
-		to { transform: translateY(0); }
+	@keyframes focus-pull {
+		from { opacity: 0; filter: blur(18px); transform: scale(1.04); }
+		to { opacity: 1; filter: blur(0); transform: scale(1); }
 	}
 	@keyframes rule-draw {
 		to { width: clamp(3rem, 8vw, 6rem); }
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.hero-name .inner { transform: none !important; animation: none !important; }
+		.hero-name { animation: none !important; }
 		.hero-rule { width: clamp(3rem, 8vw, 6rem) !important; animation: none !important; }
 	}
 	.hero-links {
@@ -126,7 +99,7 @@
 		align-items: center;
 		margin-top: 0.25rem;
 		opacity: 0;
-		animation: sub-fade 800ms ease-out 1400ms forwards;
+		animation: sub-fade 700ms ease-out 1550ms forwards;
 	}
 	.hero-link {
 		display: inline-flex;
