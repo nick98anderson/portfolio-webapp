@@ -33,9 +33,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 			<h2 class="section-title">Skills</h2>
 			<dl class="skills">
 				<dt>Languages</dt>
-				<dd><span class="lvl">Proficient:</span> Python, SQL, JavaScript<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Go, Java, C++</dd>
+				<dd><span class="lvl">Proficient:</span> Python, SQL, JavaScript, TypeScript<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Go, Java, C++</dd>
 				<dt>Technologies</dt>
-				<dd><span class="lvl">Proficient:</span> GCP, BigQuery, dbt, Django, Next.js<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Kubernetes, Airflow</dd>
+				<dd><span class="lvl">Proficient:</span> GCP, BigQuery, dbt, Django, Next.js, React<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Kubernetes, Airflow</dd>
 				<dt>Tools</dt>
 				<dd>Git, GitHub Actions, Docker, Kubectl, Pulumi, Postman, gcloud CLI, Claude Code</dd>
 				<dt>Non-Technical</dt>
@@ -48,21 +48,21 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
 			<article class="role">
 				<div class="role-head">
-					<h3>TELUS <span class="sep">·</span> <span class="role-title">Data Engineer</span></h3>
-					<span class="meta">July 2025 – Present</span>
+					<h3>TELUS <span class="sep">·</span> <span class="role-title">Data Engineer (Full Stack)</span></h3>
+					<span class="meta">Jul 2025 – Present</span>
 				</div>
 				<ul class="role-summary">
-					<li>Refactored a billing-to-ERP reconciliation pipeline across 8 billing systems, correcting faulty logic to eliminate $10M in revenue variances and remove manual reconciliation for finance teams.</li>
-					<li>Engineered a master data web platform to replace three legacy Access/VBA tools, automating governed feeds into downstream ERP systems while saving $240K/year in third-party licensing.</li>
-					<li>Freed budget and forecast reporting from per-user licences by building extractions into BigQuery, replicating OLAP cube aggregations and deploying custom dashboards for 300+ self-service users.</li>
-					<li>Built agentic harnesses with domain context and direct integrations into internal systems and data warehouses, used daily by a 5-person team to cut daily tasks and debugging from hours to minutes.</li>
+					<li>Refactored a billing-to-ERP reconciliation pipeline across 8 billing systems into dbt, correcting faulty logic to eliminate $10M in revenue variances and remove manual reconciliation for finance teams.</li>
+					<li>Engineered a master data web platform (Django, Next.js, GKE) to replace three legacy Access/VBA tools, automating data feeds into downstream ERPs while saving $240K/year in licensing.</li>
+					<li>Eliminated licence-gated reporting by building extractions into BigQuery, replicating OLAP cube aggregations and deploying custom data apps and dashboards for 300+ self-service users.</li>
+					<li>Built agentic harnesses with domain context and direct integrations into internal systems and data warehouses, used by a 5-person team to cut daily tasks and debugging from hours to minutes.</li>
 				</ul>
 			</article>
 
 			<article class="role">
 				<div class="role-head">
-					<h3>TELUS <span class="sep">·</span> <span class="role-title">Business Systems Analyst</span></h3>
-					<span class="meta">May 2022 – July 2025</span>
+					<h3>TELUS <span class="sep">·</span> <span class="role-title">Business Systems Analyst (Data Engineering)</span></h3>
+					<span class="meta">May 2022 – Jul 2025</span>
 				</div>
 				<ul class="role-summary">
 					<li>Re-engineered an on-prem legacy data mart onto GCP (BigQuery, dbt, Python), eliminating proprietary ETL and retiring legacy infrastructure to cut $50K/year in licensing.</li>
@@ -101,7 +101,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 			<h2 class="section-title">Education</h2>
 			<div class="edu">
 				<h3>University of Alberta <span class="sep">·</span> <span class="edu-title">BSc, Computing Science</span></h3>
-				<span class="meta">Sept 2019 – Dec 2023</span>
+				<span class="meta">Sep 2019 – Dec 2023</span>
 			</div>
 		</section>
 	</main>
