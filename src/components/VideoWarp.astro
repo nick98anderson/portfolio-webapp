@@ -141,9 +141,17 @@ const {
 	.vwarp.gl::before {
 		display: none;
 	}
-	/* The video is only a texture source once WebGL is running. */
+	/* Once WebGL runs, the video is only a texture source. Keep it *visible*
+	   underneath the opaque canvas: iOS Safari pauses muted autoplay video
+	   that is hidden (visibility/display/opacity), which froze it until a tap.
+	   Drop the fallback's blur/zoom so it costs nothing while covered. */
 	.vwarp.gl .vwarp-video {
-		visibility: hidden;
+		filter: none;
+		transform: none;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
 	}
 	.vwarp:not(.gl) .vwarp-canvas {
 		display: none;
@@ -344,6 +352,11 @@ void main() {
 			if (reduced || saveData) return; // still poster only
 			const src = (portrait ? d.srcPortrait : d.src) || '';
 			if (video.getAttribute('src') !== src) {
+				// iOS needs the muted *property* set before playback is requested.
+				video.muted = true;
+				video.defaultMuted = true;
+				video.playsInline = true;
+				video.autoplay = true;
 				const t = video.currentTime;
 				video.src = src;
 				video.currentTime = t;
@@ -352,16 +365,29 @@ void main() {
 		};
 
 		// Autoplay can be refused (e.g. iOS Low Power Mode): retry on first touch.
+		let retryArmed = false;
 		const play = () => {
 			video.play().catch(() => {
-				const retry = () => { video.play().catch(() => {}); };
-				document.addEventListener('pointerdown', retry, { once: true });
-				document.addEventListener('touchend', retry, { once: true });
+				if (retryArmed) return;
+				retryArmed = true;
+				const retry = () => {
+					retryArmed = false;
+					document.removeEventListener('pointerdown', retry);
+					document.removeEventListener('touchend', retry);
+					video.play().catch(() => {});
+				};
+				document.addEventListener('pointerdown', retry);
+				document.addEventListener('touchend', retry);
 			});
 		};
 
 		applySource();
 		portraitMq.addEventListener('change', applySource);
+		// If the browser pauses the background on its own (power saving, media
+		// session changes), quietly try to resume while the page is visible.
+		video.addEventListener('pause', () => {
+			if (!document.hidden && !reduced && !saveData) setTimeout(() => { if (video.paused && !document.hidden) play(); }, 250);
+		});
 		if (reduced || saveData) return;
 
 		setupPanel(params, activeZoom, isPortrait, portraitMq);
