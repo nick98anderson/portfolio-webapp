@@ -366,8 +366,13 @@ void main() {
 
 		// Autoplay can be refused (e.g. iOS Low Power Mode): retry on first touch.
 		let retryArmed = false;
+		// ?debug: on-screen readout of what the browser does with playback.
+		const debug = /[?&]debug\b/.test(location.search) ? makeDebug(video, root, { reduced, saveData }) : null;
+
 		const play = () => {
-			video.play().catch(() => {
+			debug?.log('play() requested');
+			video.play().then(() => debug?.log('play() OK')).catch((err) => {
+				debug?.log(`play() REFUSED: ${err?.name}: ${err?.message}`);
 				if (retryArmed) return;
 				retryArmed = true;
 				const retry = () => {
@@ -433,12 +438,40 @@ void main() {
 		gl.uniform3fv(U.ink, hexToRgb(ink));
 
 		let hasFrame = false;
+		let videoLive = false; // true once real video frames are arriving
+		let texW = 16, texH = 9; // size of whatever is in the texture, for cover math
 		const upload = () => {
-			if (video.readyState < 2) return;
+			if (video.readyState < 2 || video.paused) return;
 			gl.bindTexture(gl.TEXTURE_2D, tex);
 			gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+			texW = video.videoWidth || texW;
+			texH = video.videoHeight || texH;
 			hasFrame = true;
+			if (!videoLive) { videoLive = true; debug?.log('texture: live video'); }
 		};
+
+		// Warp the poster still until real frames arrive. Covers slow networks
+		// and browsers that refuse autoplay outright (iOS Low Power Mode, Brave,
+		// etc.): the background still flows instead of sitting frozen.
+		let posterSrc = '';
+		const loadPoster = () => {
+			const src = video.poster;
+			if (!src || src === posterSrc || videoLive) return;
+			posterSrc = src;
+			const img = new Image();
+			img.onload = () => {
+				if (videoLive || img.src !== new URL(posterSrc, location.href).href) return;
+				gl.bindTexture(gl.TEXTURE_2D, tex);
+				gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+				texW = img.naturalWidth;
+				texH = img.naturalHeight;
+				hasFrame = true;
+				debug?.log('texture: poster still (warping)');
+			};
+			img.src = src;
+		};
+		loadPoster();
+		portraitMq.addEventListener('change', () => { if (!videoLive) loadPoster(); });
 		// Upload only when the video actually has a new frame, where supported.
 		const rvfc = 'requestVideoFrameCallback' in video;
 		if (rvfc) {
@@ -466,7 +499,7 @@ void main() {
 			if (!rvfc) upload();
 			if (hasFrame) {
 				// object-fit: cover math
-				const va = (video.videoWidth || 16) / (video.videoHeight || 9);
+				const va = texW / texH;
 				const ca = canvas.width / canvas.height;
 				const cover = ca > va ? [1, va / ca] : [ca / va, 1];
 				gl.uniform2f(U.cover, cover[0], cover[1]);
@@ -545,6 +578,31 @@ void main() {
 		portraitMq.addEventListener('change', syncZoomSlider);
 		syncZoomSlider();
 		render();
+	}
+
+	function makeDebug(video: HTMLVideoElement, root: HTMLElement, flags: Record<string, boolean>) {
+		const box = document.createElement('pre');
+		box.style.cssText = 'position:fixed;top:8px;left:8px;right:8px;z-index:9999;margin:0;padding:8px 10px;font:11px/1.35 ui-monospace,monospace;color:#0f0;background:rgba(0,0,0,.8);border-radius:6px;white-space:pre-wrap;pointer-events:none;max-height:45vh;overflow:hidden';
+		document.body.appendChild(box);
+		const events: string[] = [];
+		const t0 = performance.now();
+		const log = (m: string) => { events.push(`${((performance.now() - t0) / 1000).toFixed(1)}s ${m}`); if (events.length > 12) events.shift(); };
+		for (const e of ['loadstart', 'loadeddata', 'canplay', 'playing', 'pause', 'waiting', 'stalled', 'suspend', 'error']) {
+			video.addEventListener(e, () => log(`event: ${e}${e === 'error' ? ' ' + (video.error?.message || video.error?.code) : ''}`));
+		}
+		const render = () => {
+			box.textContent = [
+				navigator.userAgent.replace(/^Mozilla\/5\.0 /, '').slice(0, 120),
+				`flags: ${JSON.stringify(flags)}  webgl: ${root.classList.contains('gl')}`,
+				`src: ${video.currentSrc.split('/').pop() || '(none)'}  muted: ${video.muted}  playsInline: ${video.playsInline}`,
+				`paused: ${video.paused}  time: ${video.currentTime.toFixed(2)}  readyState: ${video.readyState}  visibility: ${getComputedStyle(video).visibility}`,
+				'---',
+				...events,
+			].join('\n');
+			requestAnimationFrame(render);
+		};
+		render();
+		return { log };
 	}
 
 	document.querySelectorAll<HTMLElement>('.vwarp').forEach(init);
