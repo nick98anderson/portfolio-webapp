@@ -12,10 +12,10 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 	<main class="resume">
 		<header class="resume-header reveal" style="--i: 0">
 			<img class="avatar" src={`${base}me.jpeg`} alt="Nick Anderson" width="132" height="132" />
-			<h1 class="name">Nicholas Anderson</h1>
+			<h1 class="name">Nick Anderson</h1>
 			<p class="contact">
 				Calgary, Alberta, Canada&nbsp;&nbsp;•&nbsp;&nbsp;+1 (587) 982-0953&nbsp;&nbsp;•&nbsp;&nbsp;
-				<a href="mailto:nick98anderson@gmail.com">nick98anderson@gmail.com</a>
+				<a href="mailto:ncainanderson@gmail.com">ncainanderson@gmail.com</a>
 			</p>
 			<div class="bio">
 				<p>
@@ -35,9 +35,9 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 				<dt>Languages</dt>
 				<dd><span class="lvl">Proficient:</span> Python, SQL, JavaScript<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Go, Java, C++</dd>
 				<dt>Technologies</dt>
-				<dd><span class="lvl">Proficient:</span> GCP, BigQuery, dbt, Django, PostgreSQL<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Next.js, Kubernetes, SAP</dd>
+				<dd><span class="lvl">Proficient:</span> GCP, BigQuery, dbt, Django, Next.js<span class="lvl-sep">;</span> <span class="lvl">Familiar:</span> Kubernetes, Airflow</dd>
 				<dt>Tools</dt>
-				<dd>Git, GitHub Actions, Docker, Kubectl, Pulumi, VS Code, Postman, gcloud CLI, Claude Code</dd>
+				<dd>Git, GitHub Actions, Docker, Kubectl, Pulumi, Postman, gcloud CLI, Claude Code</dd>
 				<dt>Non-Technical</dt>
 				<dd>Teamwork, listening, leadership, public speaking, creative</dd>
 			</dl>
@@ -54,7 +54,7 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 				<ul class="role-summary">
 					<li>Refactored a billing-to-ERP reconciliation pipeline across 8 billing systems, correcting faulty logic to eliminate $10M in revenue variances and remove manual reconciliation for finance teams.</li>
 					<li>Engineered a master data web platform to replace three legacy Access/VBA tools, automating governed feeds into downstream ERP systems while saving $240K/year in third-party licensing.</li>
-					<li>Freed budget and forecast reporting from per-user licences by building extractions into BigQuery, replicating OLAP cube aggregations and deploying custom dashboards for 300 self-service users.</li>
+					<li>Freed budget and forecast reporting from per-user licences by building extractions into BigQuery, replicating OLAP cube aggregations and deploying custom dashboards for 300+ self-service users.</li>
 					<li>Built agentic harnesses with domain context and direct integrations into internal systems and data warehouses, used daily by a 5-person team to cut daily tasks and debugging from hours to minutes.</li>
 				</ul>
 			</article>
@@ -66,19 +66,18 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 				</div>
 				<ul class="role-summary">
 					<li>Re-engineered an on-prem legacy data mart onto GCP (BigQuery, dbt, Python), eliminating proprietary ETL and retiring legacy infrastructure to cut $50K/year in licensing.</li>
-					<li>Cut daily and month-end finance work from 4 hours/day to 15 minutes by replacing manual UI-data management and system configuration with automated REST API integrations and workflows.</li>
-					<li>Modernized a traditionally low-code finance team by introducing Git, IaC, and CI/CD, replacing fragile Excel macros and manual processes to cut routine toil and ship faster for internal clients.</li>
+					<li>Cut daily and month-end finance work from hours to minutes by replacing manual UI-data management and system configuration with automated REST API integrations and workflows.</li>
+					<li>Modernized a traditionally low-code finance systems team by introducing version control and CI/CD, replacing fragile manual processes to cut routine toil and ship faster for internal clients.</li>
 				</ul>
 			</article>
 
 			<article class="role">
 				<div class="role-head">
-					<h3>Flare Analytics <span class="sep">·</span> <span class="role-title">Software Developer Internship</span></h3>
+					<h3>Flare Analytics <span class="sep">·</span> <span class="role-title">Software Developer Intern</span></h3>
 					<span class="meta">May 2018 – Sept 2018</span>
 				</div>
 				<ul class="role-summary">
 					<li>Developed client-facing analytics dashboards in React to visualize predictive oil and gas metrics.</li>
-					<li>Integrated frontend components with backend REST APIs to process and render high-volume time-series sensor data.</li>
 					<li>Worked alongside senior engineers on AWS deployment and release processes for client-facing web applications.</li>
 				</ul>
 			</article>
@@ -88,12 +87,12 @@ const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 			<h2 class="section-title">Selected Projects</h2>
 			<div class="project">
 				<div class="project-head">
-					<h4>Mediabox <span class="sep">·</span> <span class="role-title">Self-Hosted Media Server</span></h4>
+					<h4>Homebox <span class="sep">·</span> <span class="role-title">Home Automation Server</span></h4>
 					<span class="meta">Oct 2026</span>
 				</div>
 				<ul>
-					<li>Built a self-hosted media server with a Go background service that monitors downloads, runs health checks, and sorts finished content into a ready-to-watch library automatically.</li>
-					<li>Created a mobile web app and CLI to search, browse the library, and control the TV from anywhere, secured behind a login and a private network.</li>
+					<li>Built a self-hosted media and home automation stack with Go background services handling TV control, lighting, and playback rules.</li>
+					<li>Created a mobile web app and CLI to search, browse the library, and control the TV from anywhere, exposed remotely over Tailscale HTTPS with session auth.</li>
 				</ul>
 			</div>
 		</section>
