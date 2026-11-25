@@ -20,3 +20,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .strava-token.json
+
+# Go binaries built at the repo root
+/r2sync

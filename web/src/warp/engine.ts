@@ -110,6 +110,7 @@ export function startWarp({ root, video, canvas, sources, params, glClass }: War
 			video.defaultMuted = true;
 			video.playsInline = true;
 			video.autoplay = true;
+			video.crossOrigin = 'anonymous';
 			const t = video.currentTime;
 			video.src = src;
 			video.currentTime = t;
@@ -217,6 +218,7 @@ export function startWarp({ root, video, canvas, sources, params, glClass }: War
 		if (!src || src === posterSrc || videoLive) return;
 		posterSrc = src;
 		const img = new Image();
+		img.crossOrigin = 'anonymous'; // cross-origin bucket: required to upload it to WebGL
 		img.onload = () => {
 			if (disposed || videoLive || img.src !== new URL(posterSrc, location.href).href) return;
 			gl.bindTexture(gl.TEXTURE_2D, tex);

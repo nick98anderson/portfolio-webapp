@@ -66,8 +66,9 @@ export default function VideoWarp({
 	return (
 		<>
 			<div ref={rootRef} className={styles.root} aria-hidden="true" style={cssVars}>
-				{/* src is set from JS so phones never download the landscape file. */}
-				<video ref={videoRef} className={styles.video} poster={poster || undefined} muted loop playsInline preload="none" />
+				{/* src is set from JS so phones never download the landscape file. The media
+				    bucket is another origin: crossOrigin lets WebGL read the frames. */}
+				<video ref={videoRef} className={styles.video} poster={poster || undefined} crossOrigin="anonymous" muted loop playsInline preload="none" />
 				<canvas ref={canvasRef} className={styles.canvas} />
 			</div>
 			{controls && (
