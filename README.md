@@ -1,46 +1,36 @@
-# Astro Starter Kit: Basics
+# nickanderson.cloud
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+Personal site: a full-screen underwater video warped in real time by a WebGL
+shader, plus a resume page.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Layout
 
 ```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+web/                 React + Vite + TypeScript frontend
+├── public/          static files copied as-is (videos, posters, CNAME)
+└── src/
+    ├── components/  Hero, VideoWarp (+ dev tuning panel), Crumbs, Grain, StillBackdrop
+    ├── pages/       Home, Resume
+    ├── warp/        WebGL engine and shaders behind VideoWarp
+    └── router.tsx   routes: /, /resume, /about → /resume
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## Commands
 
-## 🧞 Commands
+Run from `web/`:
 
-All commands are run from the root of the project, from a terminal:
+| Command          | Action                                        |
+| :--------------- | :-------------------------------------------- |
+| `pnpm install`   | Install dependencies                          |
+| `pnpm dev`       | Dev server at `localhost:5173` (with the warp tuning panel) |
+| `pnpm build`     | Type-check and build to `web/dist/`           |
+| `pnpm preview`   | Serve the production build locally            |
+| `pnpm typecheck` | Type-check only                               |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+Add `?debug` to the URL for an on-screen readout of video playback state.
 
-## 👀 Want to learn more?
+## Deploy
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Pushes to `main` build `web/` and publish `web/dist` to GitHub Pages
+(`.github/workflows/deploy.yml`). Each client route also gets a copy of
+`index.html` at build time so deep links like `/resume` load directly.

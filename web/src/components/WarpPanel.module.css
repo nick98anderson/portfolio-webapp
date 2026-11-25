@@ -1,0 +1,86 @@
+.panel {
+	position: fixed;
+	right: 16px;
+	bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+	z-index: 200;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 8px;
+	font: 12px/1.2 ui-monospace, monospace;
+	color: #fff;
+}
+.toggle {
+	font: inherit;
+	font-weight: 700;
+	color: #fff;
+	background: rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 999px;
+	padding: 8px 14px;
+	min-height: 36px;
+	cursor: pointer;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+.toggle::after {
+	content: ' ▾';
+}
+.toggle[aria-expanded='false']::after {
+	content: ' ▴';
+}
+.body {
+	order: -1; /* sits above the toggle */
+	display: grid;
+	gap: 6px;
+	padding: 12px 14px;
+	background: rgba(0, 0, 0, 0.6);
+	border-radius: 10px;
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+}
+.toggle[aria-expanded='false'] + .body {
+	display: none;
+}
+.body label {
+	display: grid;
+	grid-template-columns: 80px 160px;
+	align-items: center;
+}
+.body input[type='range'] {
+	width: 100%;
+	margin: 0;
+	accent-color: var(--accent, #e8b66c);
+}
+.body output {
+	white-space: pre;
+	opacity: 0.7;
+	user-select: all;
+	-webkit-user-select: all;
+}
+
+/* Phones: a full-width bottom sheet with finger-sized sliders that
+   scrolls rather than covering the whole screen. */
+@media (max-width: 600px) {
+	.panel {
+		left: 8px;
+		right: 8px;
+		bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+	}
+	.body {
+		width: 100%;
+		box-sizing: border-box;
+		max-height: 50svh;
+		overflow-y: auto;
+		font-size: 13px;
+	}
+	.body label {
+		grid-template-columns: 84px 1fr;
+	}
+	.body input[type='range'] {
+		height: 36px;
+	}
+	.body output {
+		font-size: 11px;
+	}
+}

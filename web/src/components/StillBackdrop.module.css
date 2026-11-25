@@ -1,0 +1,15 @@
+.still {
+	position: fixed;
+	inset: 0;
+	z-index: -2;
+	pointer-events: none;
+	view-transition-name: backdrop;
+	background:
+		radial-gradient(ellipse at center, transparent 35%, rgba(8, 10, 22, 0.55) 100%),
+		linear-gradient(180deg, rgba(20, 24, 48, 0.55), rgba(20, 24, 48, 0.82)),
+		var(--still) center / cover no-repeat,
+		var(--ink);
+}
+@media print {
+	.still { display: none; }
+}
