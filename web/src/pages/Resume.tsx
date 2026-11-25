@@ -2,15 +2,17 @@ import type { CSSProperties } from 'react';
 import Crumbs from '../components/Crumbs';
 import StillBackdrop from '../components/StillBackdrop';
 import { asset } from '../lib/asset';
+import { useBackground } from '../lib/background';
 import styles from './Resume.module.css';
 
 // Stagger index for the reveal-on-load animation.
 const i = (n: number) => ({ '--i': n }) as CSSProperties;
 
 export default function Resume() {
+	const bg = useBackground();
 	return (
 		<>
-			<StillBackdrop src={asset('video/bg-blur.jpg')} />
+			<StillBackdrop src={bg?.blur} />
 			<Crumbs />
 			<main className={styles.resume}>
 				<header className={`${styles.resumeHeader} ${styles.reveal}`} style={i(0)}>

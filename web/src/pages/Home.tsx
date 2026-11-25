@@ -1,17 +1,20 @@
 import Hero from '../components/Hero';
 import VideoWarp from '../components/VideoWarp';
-import { asset } from '../lib/asset';
+import { useBackground } from '../lib/background';
 
 export default function Home() {
+	const bg = useBackground();
 	return (
 		<>
-			<VideoWarp
-				src={asset('video/bg.mp4')}
-				poster={asset('video/bg-poster.jpg')}
-				portraitSrc={asset('video/bg-portrait.mp4')}
-				portraitPoster={asset('video/bg-portrait-poster.jpg')}
-				controls={import.meta.env.DEV}
-			/>
+			{bg && (
+				<VideoWarp
+					src={bg.src}
+					poster={bg.poster}
+					portraitSrc={bg.portraitSrc}
+					portraitPoster={bg.portraitPoster}
+					controls={import.meta.env.DEV}
+				/>
+			)}
 			<Hero />
 		</>
 	);

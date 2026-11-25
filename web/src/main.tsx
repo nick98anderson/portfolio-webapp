@@ -7,7 +7,10 @@ import './styles/global.css';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router';
+import { loadBackground } from './lib/background';
 import { router } from './router';
+
+loadBackground();
 
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
