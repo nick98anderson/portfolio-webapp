@@ -2,10 +2,10 @@ name: Go
 
 on:
   pull_request:
-    paths: ['**.go', 'go.mod', 'go.sum', '.github/workflows/go.yml']
+    paths: ['backend/**', '.github/workflows/go.yml']
   push:
     branches: [main]
-    paths: ['**.go', 'go.mod', 'go.sum', '.github/workflows/go.yml']
+    paths: ['backend/**', '.github/workflows/go.yml']
 
 permissions:
   contents: read
@@ -13,12 +13,16 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
         with:
-          go-version-file: go.mod
+          go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
 
       # The media pipeline test runs real ffmpeg (it skips without it).
       - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends ffmpeg

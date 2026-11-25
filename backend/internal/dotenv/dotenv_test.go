@@ -31,6 +31,37 @@ func TestParseLine(t *testing.T) {
 	}
 }
 
+func TestLoadFromWalksUpToRepoRoot(t *testing.T) {
+	root := t.TempDir()
+	sub := filepath.Join(root, "backend", "cmd")
+	for _, d := range []string{filepath.Join(root, ".git"), sub} {
+		if err := os.MkdirAll(d, 0o755); err != nil {
+			t.Fatal(err)
+		}
+	}
+	envPath := filepath.Join(root, ".env")
+	if err := os.WriteFile(envPath, []byte("DOTENV_TEST_WALK=found\n"), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	os.Unsetenv("DOTENV_TEST_WALK")
+	t.Cleanup(func() { os.Unsetenv("DOTENV_TEST_WALK") })
+
+	got, err := loadFrom(sub)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got != envPath || os.Getenv("DOTENV_TEST_WALK") != "found" {
+		t.Fatalf("loaded %q, DOTENV_TEST_WALK=%q", got, os.Getenv("DOTENV_TEST_WALK"))
+	}
+
+	// No .env anywhere up to the repo root: nothing loaded, and the search
+	// doesn't escape above the root.
+	os.Remove(envPath)
+	if got, err := loadFrom(sub); err != nil || got != "" {
+		t.Fatalf("got %q, %v; want nothing", got, err)
+	}
+}
+
 func TestLoadDoesNotOverride(t *testing.T) {
 	path := filepath.Join(t.TempDir(), ".env")
 	if err := os.WriteFile(path, []byte("DOTENV_TEST_NEW=from-file\nDOTENV_TEST_SET=from-file\n"), 0o600); err != nil {

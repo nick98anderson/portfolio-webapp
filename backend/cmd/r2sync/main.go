@@ -1,7 +1,10 @@
 // Command r2sync prepares background videos and publishes them to the R2
-// media bucket. Run it locally whenever the site's background should change:
+// media bucket. Run it locally (from backend/) whenever the site's background
+// should change:
 //
 //	go run ./cmd/r2sync push ~/Videos/reef.mp4 --portrait ~/Videos/reef-portrait.mp4
+//
+// From the repo root, prefix it with -C: go -C backend run ./cmd/r2sync …
 //
 // Credentials come from R2_* variables, read from .env at the repo root.
 package main
@@ -23,10 +26,10 @@ import (
 	"text/tabwriter"
 	"time"
 
-	"github.com/nick98anderson/portfolio-webapp/internal/dotenv"
-	"github.com/nick98anderson/portfolio-webapp/internal/manifest"
-	"github.com/nick98anderson/portfolio-webapp/internal/media"
-	"github.com/nick98anderson/portfolio-webapp/internal/r2"
+	"github.com/nick98anderson/portfolio-webapp/backend/internal/dotenv"
+	"github.com/nick98anderson/portfolio-webapp/backend/internal/manifest"
+	"github.com/nick98anderson/portfolio-webapp/backend/internal/media"
+	"github.com/nick98anderson/portfolio-webapp/backend/internal/r2"
 )
 
 // mediaPrefix is where uploads live in the bucket; prune only looks here.

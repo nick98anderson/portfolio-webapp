@@ -6,8 +6,9 @@ shader, plus a resume page.
 ## Layout
 
 ```text
-cmd/r2sync/          CLI that publishes background videos to Cloudflare R2
-internal/            Go packages: manifest, media (ffmpeg), r2, dotenv
+backend/             Go module
+├── cmd/r2sync/      CLI that publishes background videos to Cloudflare R2
+└── internal/        manifest, media (ffmpeg), r2 client, dotenv
 web/                 React + Vite + TypeScript frontend
 ├── public/          static files copied as-is (photo, CNAME)
 └── src/
@@ -35,9 +36,11 @@ R2_BUCKET=portfolio-media
 R2_PUBLIC_URL=https://pub-….r2.dev
 ```
 
-Publishing needs Go and ffmpeg (`brew install go ffmpeg`):
+Publishing needs Go and ffmpeg (`brew install go ffmpeg`). Run from
+`backend/` (or add `-C backend` after `go` to run from the repo root):
 
 ```sh
+cd backend
 go run ./cmd/r2sync push ~/Videos/reef.mp4 --portrait ~/Videos/reef-portrait.mp4
 go run ./cmd/r2sync list          # * marks the live video
 go run ./cmd/r2sync use bg        # roll back to an earlier upload
@@ -67,7 +70,7 @@ Frontend, run from `web/`:
 | `pnpm preview`   | Serve the production build locally            |
 | `pnpm typecheck` | Type-check only                               |
 
-Go, run from the repo root: `go test ./...`.
+Backend, run from `backend/`: `go test ./...`.
 
 Add `?debug` to the URL for an on-screen readout of video playback state.
 

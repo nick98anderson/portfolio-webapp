@@ -1,4 +1,4 @@
-module github.com/nick98anderson/portfolio-webapp
+module github.com/nick98anderson/portfolio-webapp/backend
 
 go 1.27.3
 

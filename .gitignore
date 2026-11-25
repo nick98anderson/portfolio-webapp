@@ -22,4 +22,4 @@ pnpm-debug.log*
 .strava-token.json
 
 # Go binaries built at the repo root
-/r2sync
+/backend/r2sync

@@ -11,20 +11,25 @@ import (
 	"strings"
 )
 
-// LoadFromRepo finds .env in the current directory or the nearest parent
-// that has a go.mod (the repo root), and loads it. A missing file is not an
-// error. It returns the path it loaded, or "".
+// LoadFromRepo finds the nearest .env walking up from the current directory,
+// stopping at the repo root (the directory containing .git), and loads it.
+// So it works from the repo root, backend/ or anywhere below. A missing file
+// is not an error. It returns the path it loaded, or "".
 func LoadFromRepo() (string, error) {
 	dir, err := os.Getwd()
 	if err != nil {
 		return "", err
 	}
+	return loadFrom(dir)
+}
+
+func loadFrom(dir string) (string, error) {
 	for {
 		path := filepath.Join(dir, ".env")
 		if _, err := os.Stat(path); err == nil {
 			return path, Load(path)
 		}
-		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
+		if _, err := os.Stat(filepath.Join(dir, ".git")); err == nil {
 			return "", nil // reached the repo root without finding one
 		}
 		parent := filepath.Dir(dir)
